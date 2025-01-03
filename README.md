@@ -161,9 +161,6 @@ project/
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👥 Authors
-
-- [Your Name/Team Name]
 
 ## 🙏 Acknowledgments
 
