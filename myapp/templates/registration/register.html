@@ -1,0 +1,478 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="background">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="wave-container">
+        <svg class="wave" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+            <path fill="rgba(255, 255, 255, 0.2)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+</div>
+
+<section class="register-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-11 mx-auto">
+                <div class="glass-card animate__animated animate__fadeIn">
+                    <div class="card-body p-4 p-sm-5">
+                        <div class="text-center mb-4">
+                            <div class="mb-4">
+                                <i class="fas fa-user-plus fa-3x text-primary"></i>
+                            </div>
+                            <h2 class="h3 mb-3">Create Your Account</h2>
+                            <p class="text-muted">Join thousands of users organizing their tasks with style</p>
+                        </div>
+
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            
+                            {% if form.errors %}
+                            <div class="alert alert-danger animate__animated animate__shakeX">
+                                <ul class="mb-0">
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group mb-4">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Username
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                <div class="invalid-feedback d-block animate__animated animate__fadeIn">
+                                    {{ form.username.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text text-muted">
+                                    <small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    <i class="fas fa-envelope me-2"></i>Email
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="invalid-feedback d-block animate__animated animate__fadeIn">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text text-muted">
+                                    <small>We'll never share your email with anyone else.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password
+                                </label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                <div class="invalid-feedback d-block animate__animated animate__fadeIn">
+                                    {{ form.password1.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="password-strength mt-2" id="passwordStrength">
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Password strength: <span id="strengthText">Too weak</span></small>
+                                    </div>
+                                </div>
+                                <div class="password-requirements mt-2">
+                                    <div class="requirement" id="lengthReq">
+                                        <i class="fas fa-circle text-muted me-2"></i>
+                                        <small>At least 8 characters</small>
+                                    </div>
+                                    <div class="requirement" id="numberReq">
+                                        <i class="fas fa-circle text-muted me-2"></i>
+                                        <small>Contains a number</small>
+                                    </div>
+                                    <div class="requirement" id="specialReq">
+                                        <i class="fas fa-circle text-muted me-2"></i>
+                                        <small>Contains a special character</small>
+                                    </div>
+                                    <div class="requirement" id="caseReq">
+                                        <i class="fas fa-circle text-muted me-2"></i>
+                                        <small>Contains uppercase & lowercase letters</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Confirm Password
+                                </label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                <div class="invalid-feedback d-block animate__animated animate__fadeIn">
+                                    {{ form.password2.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div id="passwordMatch" class="form-text" style="display: none;">
+                                    <i class="fas fa-check-circle text-success me-1"></i>
+                                    <small>Passwords match</small>
+                                </div>
+                                <div id="passwordMismatch" class="form-text text-danger" style="display: none;">
+                                    <i class="fas fa-times-circle me-1"></i>
+                                    <small>Passwords do not match</small>
+                                </div>
+                            </div>
+
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-primary">Login here</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+    /* Background and Animation Styles */
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #4158D0, #C850C0, #FFCC70);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        z-index: -2;
+        overflow: hidden;
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.7;
+        animation: float 10s infinite;
+    }
+
+    .blob-1 {
+        width: 300px;
+        height: 300px;
+        background: rgba(65, 88, 208, 0.5);
+        top: -150px;
+        left: -150px;
+        animation-delay: 0s;
+    }
+
+    .blob-2 {
+        width: 350px;
+        height: 350px;
+        background: rgba(200, 80, 192, 0.5);
+        top: 50%;
+        right: -175px;
+        animation-delay: -3s;
+    }
+
+    .blob-3 {
+        width: 250px;
+        height: 250px;
+        background: rgba(255, 204, 112, 0.5);
+        bottom: -125px;
+        left: 50%;
+        animation-delay: -6s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-20px) scale(1.1); }
+    }
+
+    .wave-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .wave {
+        animation: wave 10s linear infinite;
+    }
+
+    @keyframes wave {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+    }
+
+    /* Glassmorphism Styles */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .register-section {
+        min-height: 100vh;
+        padding: 2rem 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        color: white;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-primary {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Form Styles */
+    .form-label {
+        color: white;
+        font-weight: 500;
+    }
+
+    .form-text {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .invalid-feedback {
+        color: #ffd7d7;
+    }
+
+    .password-strength .progress {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .password-strength .progress-bar {
+        background: linear-gradient(45deg, #4158D0, #C850C0);
+        border-radius: 10px;
+    }
+
+    .requirement {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .requirement.valid {
+        color: #98ffa2;
+    }
+
+    .requirement.invalid {
+        color: #ffa1a1;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .glass-card {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        .blob {
+            filter: blur(60px);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .register-section {
+            padding: 1rem 0;
+        }
+
+        .glass-card {
+            margin: 0.5rem;
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const password1 = document.getElementById('{{ form.password1.id_for_label }}');
+    const password2 = document.getElementById('{{ form.password2.id_for_label }}');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.querySelector('.progress-bar');
+    const strengthText = document.getElementById('strengthText');
+    const requirements = {
+        length: document.getElementById('lengthReq'),
+        number: document.getElementById('numberReq'),
+        special: document.getElementById('specialReq'),
+        case: document.getElementById('caseReq')
+    };
+
+    function validatePassword(password) {
+        const checks = {
+            length: password.length >= 8,
+            number: /\d/.test(password),
+            special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+            case: /[a-z]/.test(password) && /[A-Z]/.test(password)
+        };
+
+        Object.entries(checks).forEach(([key, valid]) => {
+            const req = requirements[key];
+            req.classList.toggle('valid', valid);
+            req.classList.toggle('invalid', !valid);
+            const icon = req.querySelector('i');
+            icon.className = `fas ${valid ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'} me-2`;
+        });
+
+        // Calculate password strength
+        const strength = Object.values(checks).filter(Boolean).length;
+        const strengthPercentage = (strength / 4) * 100;
+        progressBar.style.width = `${strengthPercentage}%`;
+        progressBar.className = `progress-bar bg-${getStrengthColor(strength)}`;
+        strengthText.textContent = getStrengthText(strength);
+
+        return Object.values(checks).every(Boolean);
+    }
+
+    function getStrengthColor(strength) {
+        if (strength <= 1) return 'danger';
+        if (strength === 2) return 'warning';
+        if (strength === 3) return 'info';
+        return 'success';
+    }
+
+    function getStrengthText(strength) {
+        if (strength <= 1) return 'Too weak';
+        if (strength === 2) return 'Could be stronger';
+        if (strength === 3) return 'Strong';
+        return 'Very strong';
+    }
+
+    function checkPasswordMatch() {
+        const match = document.getElementById('passwordMatch');
+        const mismatch = document.getElementById('passwordMismatch');
+        
+        if (password2.value) {
+            if (password1.value === password2.value) {
+                match.style.display = 'block';
+                mismatch.style.display = 'none';
+                return true;
+            } else {
+                match.style.display = 'none';
+                mismatch.style.display = 'block';
+                return false;
+            }
+        }
+        return false;
+    }
+
+    function validateForm() {
+        const username = document.getElementById('{{ form.username.id_for_label }}').value;
+        const email = document.getElementById('{{ form.email.id_for_label }}').value;
+        const passwordValid = validatePassword(password1.value);
+        const passwordsMatch = checkPasswordMatch();
+
+        submitBtn.disabled = !(username && email && passwordValid && passwordsMatch);
+    }
+
+    // Event listeners
+    password1.addEventListener('input', function() {
+        validatePassword(this.value);
+        validateForm();
+    });
+
+    password2.addEventListener('input', function() {
+        checkPasswordMatch();
+        validateForm();
+    });
+
+    form.addEventListener('input', validateForm);
+
+    // Add password visibility toggle
+    const togglePassword = (inputId) => {
+        const input = document.getElementById(inputId);
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+        const icon = input.parentElement.querySelector('.toggle-password i');
+        icon.className = `fas ${type === 'password' ? 'fa-eye' : 'fa-eye-slash'}`;
+    };
+
+    [password1, password2].forEach(input => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-link position-absolute end-0 top-50 translate-middle-y text-muted toggle-password';
+        button.innerHTML = '<i class="fas fa-eye"></i>';
+        button.style.zIndex = '5';
+        button.onclick = () => togglePassword(input.id);
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'position-relative';
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+        wrapper.appendChild(button);
+    });
+
+    // Initialize form validation
+    validateForm();
+});
+</script>
+{% endblock %}

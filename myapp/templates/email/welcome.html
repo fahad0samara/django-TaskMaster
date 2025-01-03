@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #4F46E5; margin-bottom: 10px;">Welcome to TaskMaster!</h1>
+        <p style="color: #6B7280; font-size: 16px;">We're excited to have you on board.</p>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #1F2937; margin-bottom: 15px;">Getting Started</h2>
+        <p style="color: #4B5563; line-height: 1.6;">Here are a few things you can do:</p>
+        <ul style="color: #4B5563; line-height: 1.6;">
+            <li>Create your first task</li>
+            <li>Set up task categories</li>
+            <li>Explore the Kanban board</li>
+            <li>Try the calendar view</li>
+        </ul>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #1F2937; margin-bottom: 15px;">Need Help?</h2>
+        <p style="color: #4B5563; line-height: 1.6;">If you have any questions, check out our:</p>
+        <ul style="color: #4B5563; line-height: 1.6;">
+            <li>FAQ page</li>
+            <li>User guide</li>
+            <li>Video tutorials</li>
+        </ul>
+        <p style="color: #4B5563; line-height: 1.6;">Or contact our support team at support@taskmaster.com</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ site_url }}" style="display: inline-block; background: #4F46E5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">Get Started</a>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; color: #6B7280; font-size: 14px;">
+        <p>This email was sent to {{ user.email }}</p>
+        <p>© {% now "Y" %} TaskMaster. All rights reserved.</p>
+    </div>
+</div>
+{% endblock %}

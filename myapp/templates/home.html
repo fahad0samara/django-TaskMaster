@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    {% if user.is_authenticated %}
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Welcome Back!</h1>
+        <p class="lead text-white-50 mb-4 animate__animated animate__fadeInUp animate__delay-1s">Ready to manage your tasks? Jump right in!</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 text-center p-4 animate__animated animate__fadeInLeft animate__delay-1s">
+                <div class="card-body">
+                    <div class="display-4 mb-3 text-primary">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Kanban Board</h5>
+                    <p class="card-text mb-4">Manage your tasks with our intuitive Kanban interface</p>
+                    <a href="{% url 'kanban' %}" class="btn btn-primary w-100">
+                        <i class="fas fa-arrow-right me-2"></i> Open Board
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 text-center p-4 animate__animated animate__fadeInRight animate__delay-1s">
+                <div class="card-body">
+                    <div class="display-4 mb-3 text-success">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Categories</h5>
+                    <p class="card-text mb-4">Organize tasks by categories for better management</p>
+                    <a href="{% url 'manage_categories' %}" class="btn btn-success w-100">
+                        <i class="fas fa-arrow-right me-2"></i> Manage Categories
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Welcome to TaskMaster</h1>
+        <p class="lead text-white-50 mb-4 animate__animated animate__fadeInUp animate__delay-1s">Organize your tasks efficiently with our modern Kanban board system</p>
+        <div class="animate__animated animate__fadeInUp animate__delay-2s">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-3">Get Started</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 animate__animated animate__fadeInLeft animate__delay-2s">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Features</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Drag and drop task management</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Priority levels and due dates</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Category organization</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Modern and responsive design</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Real-time updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 animate__animated animate__fadeInRight animate__delay-2s">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Getting Started</h5>
+                    <ol class="list-unstyled">
+                        <li class="mb-2"><span class="badge bg-primary me-2">1</span> Create an account or log in</li>
+                        <li class="mb-2"><span class="badge bg-primary me-2">2</span> Set up your task categories</li>
+                        <li class="mb-2"><span class="badge bg-primary me-2">3</span> Add tasks to your board</li>
+                        <li class="mb-2"><span class="badge bg-primary me-2">4</span> Organize tasks by status</li>
+                        <li class="mb-2"><span class="badge bg-primary me-2">5</span> Track your progress</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Todo App{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                <h1 class="display-4 fw-bold mb-4">Get in Touch</h1>
+                <p class="lead mb-4">Have questions or feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+            <div class="col-lg-6 animate__animated animate__fadeInRight">
+                <img src="https://via.placeholder.com/600x400" alt="Contact Us" class="img-fluid rounded-3 shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="contact-form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg animate__animated animate__fadeInUp">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-5">Send Us a Message</h2>
+                        
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <form method="post" class="contact-form needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="name" class="form-label">Your Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="subject" class="form-label">Subject</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                                <div class="invalid-feedback">Please enter a subject.</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="message" class="form-label">Message</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                                </div>
+                                <div class="invalid-feedback">Please enter your message.</div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="contact-info-section py-5 bg-dark">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-info-card card h-100 animate__animated animate__fadeInUp">
+                    <div class="card-body p-4 text-center">
+                        <div class="contact-icon mb-4">
+                            <i class="fas fa-map-marker-alt fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Our Location</h3>
+                        <p class="mb-0">123 Todo Street<br>App City, TC 12345<br>United States</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-info-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                    <div class="card-body p-4 text-center">
+                        <div class="contact-icon mb-4">
+                            <i class="fas fa-phone-alt fa-3x text-success"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Phone Number</h3>
+                        <p class="mb-0">+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-info-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                    <div class="card-body p-4 text-center">
+                        <div class="contact-icon mb-4">
+                            <i class="fas fa-envelope fa-3x text-info"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Email Address</h3>
+                        <p class="mb-0">info@todoapp.com<br>support@todoapp.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item animate__animated animate__fadeInUp">
+                        <h3 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1">
+                                How can I get started with Todo App?
+                            </button>
+                        </h3>
+                        <div id="faqCollapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Getting started is easy! Simply click the "Register" button, create your account, and you can begin organizing your tasks right away.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate__animated animate__fadeInUp">
+                        <h3 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2">
+                                Is there a free trial available?
+                            </button>
+                        </h3>
+                        <div id="faqCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! We offer a 14-day free trial of our premium features. No credit card required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate__animated animate__fadeInUp">
+                        <h3 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3">
+                                Can I export my tasks?
+                            </button>
+                        </h3>
+                        <div id="faqCollapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, you can export your tasks in CSV or JSON format. This feature is available to all users.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+    // Form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    // Animate elements when they come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate__fadeInUp');
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    document.querySelectorAll('.contact-info-card, .accordion-item').forEach((el) => {
+        observer.observe(el);
+    });
+</script>
+{% endblock %}
+{% endblock %}

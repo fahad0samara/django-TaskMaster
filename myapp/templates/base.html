@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Todo App{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            /* Primary Colors */
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            
+            /* Background Colors */
+            --bg-gradient-start: #4f46e5;
+            --bg-gradient-mid: #8b5cf6;
+            --bg-gradient-end: #06b6d4;
+            --bg-white: rgba(255, 255, 255, 0.95);
+            --bg-light: rgba(248, 250, 252, 0.97);
+            
+            /* Text Colors */
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --text-light: #f8fafc;
+            
+            /* Border and Shadow */
+            --border-color: rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            
+            /* Status Colors */
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+        }
+
+        body {
+            background: linear-gradient(-45deg, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+            background-size: 400% 400%;
+            color: var(--text-dark);
+            min-height: 100vh;
+            position: relative;
+            animation: gradient 15s ease infinite;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Enhanced Glassmorphism */
+        .glass-effect {
+            background: var(--bg-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: var(--bg-white) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--glass-shadow);
+            padding: var(--spacing-md) 0;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color) !important;
+            transform: translateY(-1px);
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--spacing-md) var(--spacing-lg);
+        }
+
+        .card-body {
+            padding: var(--spacing-lg);
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: #7c3aed;
+            transform: translateY(-1px);
+        }
+
+        /* Form Controls */
+        .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            background: var(--bg-white);
+        }
+
+        /* Alert Styling */
+        .alert {
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md) var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        /* Badge Styling */
+        .badge {
+            padding: 0.35em 0.65em;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+        }
+
+        .badge-primary {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+        }
+
+        .badge-secondary {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--secondary-color);
+        }
+
+        /* Kanban Board */
+        .kanban-column {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            min-width: 300px;
+        }
+
+        .kanban-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .kanban-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            border: none;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+        }
+
+        .modal-body {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+        }
+
+        /* Toast Styling */
+        .toast {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .toast-header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: var(--radius-md);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        /* Status Indicators */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-dot.active {
+            background: var(--success-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .status-dot.inactive {
+            background: var(--danger-color);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Progress Bar */
+        .progress {
+            height: 8px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.2)" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
+            background-size: 1440px 100px;
+            animation: wave 20s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1440px); }
+        }
+
+        /* Floating Blobs */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .blob-1 {
+            top: -200px;
+            left: -200px;
+            background: rgba(99, 102, 241, 0.5);
+            animation: float 10s infinite alternate;
+        }
+
+        .blob-2 {
+            bottom: -200px;
+            right: -200px;
+            background: rgba(139, 92, 246, 0.5);
+            animation: float 12s infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Responsive Design System */
+        @media (max-width: 1400px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 960px;
+            }
+            
+            .display-1 { font-size: 4rem; }
+            .display-2 { font-size: 3.5rem; }
+            .display-3 { font-size: 3rem; }
+            .display-4 { font-size: 2.5rem; }
+            
+            .glass-container {
+                padding: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                max-width: 720px;
+            }
+            
+            /* Navbar Responsive */
+            .navbar-collapse {
+                background: var(--bg-white);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid var(--border-color);
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-md);
+                margin-top: var(--spacing-md);
+            }
+            
+            .nav-item {
+                padding: var(--spacing-xs) var(--spacing-sm);
+            }
+            
+            .dropdown-menu {
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                padding-left: var(--spacing-md);
+            }
+            
+            /* Grid System */
+            .row {
+                margin-right: -10px;
+                margin-left: -10px;
+            }
+            
+            .col, [class*="col-"] {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+            
+            /* Card Adjustments */
+            .card {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .card-deck {
+                display: block;
+            }
+            
+            .card-deck .card {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            /* Modal Adjustments */
+            .modal-dialog {
+                margin: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 540px;
+            }
+            
+            body {
+                font-size: 14px;
+            }
+            
+            /* Typography */
+            h1, .h1 { font-size: 1.75rem; }
+            h2, .h2 { font-size: 1.5rem; }
+            h3, .h3 { font-size: 1.25rem; }
+            h4, .h4 { font-size: 1.125rem; }
+            h5, .h5 { font-size: 1rem; }
+            
+            .display-1 { font-size: 3rem; }
+            .display-2 { font-size: 2.75rem; }
+            .display-3 { font-size: 2.5rem; }
+            .display-4 { font-size: 2.25rem; }
+            
+            /* Spacing */
+            .container {
+                padding-right: var(--spacing-md);
+                padding-left: var(--spacing-md);
+            }
+            
+            .glass-container {
+                padding: var(--spacing-md);
+                margin: var(--spacing-md) 0;
+            }
+            
+            /* Form Elements */
+            .form-control, 
+            .form-select, 
+            .btn {
+                min-height: 44px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            /* Input Groups */
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-group > .form-control,
+            .input-group > .form-select {
+                width: 100%;
+                margin-bottom: var(--spacing-xs);
+            }
+            
+            .input-group > .btn {
+                width: 100%;
+                margin-left: 0 !important;
+                border-radius: var(--radius-md) !important;
+            }
+            
+            /* Tables */
+            .table-responsive {
+                margin-bottom: var(--spacing-md);
+                border-radius: var(--radius-md);
+            }
+            
+            .table {
+                font-size: 14px;
+            }
+            
+            .table td,
+            .table th {
+                padding: var(--spacing-xs);
+            }
+            
+            /* Kanban Board */
+            .kanban-board {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: var(--spacing-md);
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .kanban-column {
+                min-width: 280px;
+                margin-right: var(--spacing-md);
+                flex: 0 0 auto;
+                scroll-snap-align: start;
+            }
+            
+            /* Toast Notifications */
+            .toast {
+                width: 100%;
+                max-width: none;
+                margin: var(--spacing-xs);
+            }
+            
+            .toast-container {
+                padding: var(--spacing-xs);
+            }
+        }
+
+        @media (max-width: 576px) {
+            /* Container */
+            .container {
+                padding-right: var(--spacing-sm);
+                padding-left: var(--spacing-sm);
+            }
+            
+            /* Typography */
+            body {
+                font-size: 13px;
+            }
+            
+            .display-1 { font-size: 2.5rem; }
+            .display-2 { font-size: 2.25rem; }
+            .display-3 { font-size: 2rem; }
+            .display-4 { font-size: 1.75rem; }
+            
+            /* Navbar */
+            .navbar {
+                padding: var(--spacing-xs) 0;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            /* Buttons */
+            .btn {
+                width: 100%;
+                margin-bottom: var(--spacing-xs);
+            }
+            
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .btn-group .btn {
+                border-radius: var(--radius-md) !important;
+            }
+            
+            /* Cards */
+            .card {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .card-body {
+                padding: var(--spacing-md);
+            }
+            
+            /* Forms */
+            .form-group {
+                margin-bottom: var(--spacing-sm);
+            }
+            
+            .form-label {
+                margin-bottom: var(--spacing-xs);
+            }
+            
+            /* Modals */
+            .modal-content {
+                border-radius: var(--radius-lg);
+            }
+            
+            .modal-header,
+            .modal-footer {
+                padding: var(--spacing-sm);
+            }
+            
+            .modal-body {
+                padding: var(--spacing-md);
+            }
+            
+            /* Alerts */
+            .alert {
+                padding: var(--spacing-sm);
+                margin-bottom: var(--spacing-sm);
+            }
+            
+            /* Lists */
+            .list-group-item {
+                padding: var(--spacing-sm);
+            }
+            
+            /* Tabs */
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .nav-tabs .nav-link {
+                white-space: nowrap;
+            }
+            
+            /* Dropdowns */
+            .dropdown-menu {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            /* Background Elements */
+            .blob {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .wave {
+                height: 40px;
+            }
+            
+            /* Utilities */
+            .d-sm-none {
+                display: none !important;
+            }
+            
+            .text-sm-center {
+                text-align: center !important;
+            }
+            
+            .mx-sm-auto {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+            
+            /* Touch Targets */
+            .nav-link,
+            .dropdown-item,
+            .list-group-item,
+            .form-check-label {
+                padding: var(--spacing-sm) var(--spacing-md);
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background: none !important;
+                color: #000 !important;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .card,
+            .glass-container {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+            
+            .table {
+                border-collapse: collapse !important;
+            }
+            
+            .table td,
+            .table th {
+                background-color: #fff !important;
+            }
+            
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Wave Animation -->
+    <div class="wave-container">
+        <div class="wave"></div>
+    </div>
+
+    <!-- Floating Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-75">
+        <div class="container-fluid">
+            <a class="navbar-brand animate__animated animate__fadeIn" href="{% url 'home' %}">
+                <i class="fas fa-check-double me-2"></i>Todo App
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'about' %}">
+                            <i class="fas fa-info-circle me-2"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'features' %}">
+                            <i class="fas fa-star me-2"></i>Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'contact' %}">
+                            <i class="fas fa-envelope me-2"></i>Contact
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'kanban' %}">
+                            <i class="fas fa-columns me-2"></i>Kanban
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'calendar' %}">
+                            <i class="fas fa-calendar me-2"></i>Calendar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'manage_categories' %}">
+                            <i class="fas fa-tags me-2"></i>Categories
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cog me-2"></i>Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'export_todos' format='csv' %}">
+                                    <i class="fas fa-file-csv me-2"></i>Export to CSV
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'export_todos' format='json' %}">
+                                    <i class="fas fa-file-code me-2"></i>Export to JSON
+                                </a>
+                            </li>
+                            {% if user.is_superuser %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'email_preview' template='welcome' %}">
+                                    <i class="fas fa-envelope me-2"></i>Email Templates
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeIn" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus me-2"></i>Register
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} animate__animated animate__fadeIn">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <!-- Cookie Notice -->
+    <div class="cookie-notice" id="cookieNotice">
+        <h5 class="mb-3">🍪 Cookie Notice</h5>
+        <p class="mb-3">We use cookies to enhance your experience and analyze our traffic.</p>
+        <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-light" onclick="declineCookies()">Decline</button>
+            <button class="btn btn-primary" onclick="acceptCookies()">Accept</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    {% block extra_js %}{% endblock %}
+    
+    <script>
+        // Core Utilities
+        const Utils = {
+            getCookie: function(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            },
+
+            formatDate: function(date) {
+                return moment(date).format('MMM D, YYYY');
+            },
+
+            showToast: function(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast align-items-center text-white bg-${type} border-0`;
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+                
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">${message}</div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                `;
+                
+                const container = document.querySelector('.toast-container') || (() => {
+                    const div = document.createElement('div');
+                    div.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+                    document.body.appendChild(div);
+                    return div;
+                })();
+                
+                container.appendChild(toast);
+                const bsToast = new bootstrap.Toast(toast);
+                bsToast.show();
+                
+                toast.addEventListener('hidden.bs.toast', () => {
+                    container.removeChild(toast);
+                    if (!container.hasChildNodes()) {
+                        document.body.removeChild(container);
+                    }
+                });
+            },
+
+            showLoading: function(message = 'Loading...') {
+                const overlay = document.createElement('div');
+                overlay.className = 'loading-overlay';
+                overlay.innerHTML = `
+                    <div class="loading-spinner"></div>
+                    <div class="loading-message mt-3">${message}</div>
+                `;
+                document.body.appendChild(overlay);
+                document.body.style.overflow = 'hidden';
+            },
+
+            hideLoading: function() {
+                const overlay = document.querySelector('.loading-overlay');
+                if (overlay) {
+                    document.body.removeChild(overlay);
+                    document.body.style.overflow = '';
+                }
+            },
+
+            debounce: function(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            },
+
+            validateForm: function(form) {
+                const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('is-invalid');
+                        
+                        const feedback = input.nextElementSibling;
+                        if (!feedback || !feedback.classList.contains('invalid-feedback')) {
+                            const div = document.createElement('div');
+                            div.className = 'invalid-feedback';
+                            div.textContent = `${input.getAttribute('placeholder') || 'This field'} is required`;
+                            input.parentNode.insertBefore(div, input.nextSibling);
+                        }
+                    } else {
+                        input.classList.remove('is-invalid');
+                        const feedback = input.nextElementSibling;
+                        if (feedback && feedback.classList.contains('invalid-feedback')) {
+                            feedback.remove();
+                        }
+                    }
+                });
+                
+                return isValid;
+            },
+
+            handleApiError: function(error) {
+                console.error('API Error:', error);
+                this.showToast(error.message || 'An error occurred. Please try again.', 'danger');
+            },
+
+            initializeTooltips: function() {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            },
+
+            initializePopovers: function() {
+                const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+                popoverTriggerList.map(function (popoverTriggerEl) {
+                    return new bootstrap.Popover(popoverTriggerEl);
+                });
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Bootstrap components
+            Utils.initializeTooltips();
+            Utils.initializePopovers();
+
+            // Handle cookie notice
+            if (!localStorage.getItem('cookieNoticeAccepted')) {
+                setTimeout(function() {
+                    const cookieNotice = document.createElement('div');
+                    cookieNotice.className = 'cookie-notice fade-in';
+                    cookieNotice.innerHTML = `
+                        <p class="mb-2">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+                        <button class="btn btn-primary" onclick="acceptCookies()">Accept</button>
+                    `;
+                    document.body.appendChild(cookieNotice);
+                }, 1000);
+            }
+
+            // Add loading indicator to forms
+            document.querySelectorAll('form:not([data-no-loading])').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    if (Utils.validateForm(this)) {
+                        Utils.showLoading();
+                    } else {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            // Add loading indicator to links with 'data-loading' attribute
+            document.querySelectorAll('a[data-loading]').forEach(link => {
+                link.addEventListener('click', function() {
+                    Utils.showLoading();
+                });
+            });
+
+            // Handle mobile navigation
+            const navbar = document.querySelector('.navbar');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', Utils.debounce(function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+                    // Scrolling down
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scrolling up
+                    navbar.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            }, 100));
+
+            // Handle theme preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            function updateTheme(e) {
+                if (e.matches) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            }
+            
+            prefersDark.addListener(updateTheme);
+            updateTheme(prefersDark);
+        });
+
+        // Global Functions
+        function acceptCookies() {
+            localStorage.setItem('cookieNoticeAccepted', 'true');
+            document.querySelector('.cookie-notice').remove();
+        }
+
+        // API Utilities
+        const Api = {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Utils.getCookie('csrftoken')
+            },
+
+            async get(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return await response.json();
+                } catch (error) {
+                    Utils.handleApiError(error);
+                    throw error;
+                }
+            },
+
+            async post(url, data) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: this.headers,
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return await response.json();
+                } catch (error) {
+                    Utils.handleApiError(error);
+                    throw error;
+                }
+            },
+
+            async put(url, data) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: this.headers,
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return await response.json();
+                } catch (error) {
+                    Utils.handleApiError(error);
+                    throw error;
+                }
+            },
+
+            async delete(url) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: this.headers
+                    });
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return await response.json();
+                } catch (error) {
+                    Utils.handleApiError(error);
+                    throw error;
+                }
+            }
+        };
+    </script>
+</body>
+</html>

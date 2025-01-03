@@ -1,0 +1,22 @@
+Hi {{ user.username }},
+
+This is a reminder about your upcoming todo:
+
+{{ todo.title }}
+
+{% if todo.category %}Category: {{ todo.category.name }}{% endif %}
+Due: {{ todo.due_date|date:"F j, Y, g:i a" }}
+{% if hours_remaining < 24 %}Due in {{ hours_remaining|floatformat:1 }} hours!{% endif %}
+Priority: {% if todo.priority == 1 %}Low{% elif todo.priority == 2 %}Medium{% else %}High{% endif %}
+
+{% if todo.content %}
+{{ todo.content }}
+{% endif %}
+
+{% if hours_remaining < 24 %}This todo is due soon! Make sure to complete it on time.{% else %}Don't forget to work on this todo to complete it before the due date.{% endif %}
+
+View your todo at: {{ site_url }}{% url 'todo_detail' todo.id %}
+
+---
+You received this email because you have enabled notifications for your todos.
+To change your notification settings, visit your profile settings page.

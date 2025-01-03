@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block title %}Features - Todo App{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                <h1 class="display-4 fw-bold mb-4">Powerful Features</h1>
+                <p class="lead mb-4">Discover all the amazing features that make our Todo App the perfect choice for your task management needs.</p>
+            </div>
+            <div class="col-lg-6 animate__animated animate__fadeInRight">
+                <img src="https://via.placeholder.com/600x400" alt="Features" class="img-fluid rounded-3 shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Features -->
+<section class="main-features py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Task Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-tasks fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Task Management</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Create and organize tasks</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Set due dates and priorities</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Add descriptions and attachments</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Track task progress</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kanban Board -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-columns fa-2x text-success"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Kanban Board</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Drag-and-drop interface</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Customizable columns</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Visual task progress</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Team collaboration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-tags fa-2x text-info"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Categories</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Create custom categories</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Color-code tasks</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Filter by category</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Category statistics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-chart-line fa-2x text-warning"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Analytics</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Productivity tracking</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Progress reports</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Time analytics</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Performance insights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Options -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-file-export fa-2x text-danger"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Export Options</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Export to CSV</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Export to JSON</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Data backup</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Import functionality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-bell fa-2x text-purple"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Notifications</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Due date reminders</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Task updates</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Email notifications</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom alerts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Premium Features -->
+<section class="premium-features py-5 bg-dark">
+    <div class="container">
+        <h2 class="text-center text-white mb-5">Premium Features</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="premium-card card bg-gradient h-100 animate__animated animate__fadeInUp">
+                    <div class="card-body p-4 text-center">
+                        <div class="premium-icon mb-4">
+                            <i class="fas fa-users fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Team Collaboration</h3>
+                        <p class="mb-0">Work together with your team, assign tasks, and track progress in real-time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="premium-card card bg-gradient h-100 animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                    <div class="card-body p-4 text-center">
+                        <div class="premium-icon mb-4">
+                            <i class="fas fa-cloud fa-3x text-info"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Cloud Sync</h3>
+                        <p class="mb-0">Access your tasks from anywhere with secure cloud synchronization.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="premium-card card bg-gradient h-100 animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                    <div class="card-body p-4 text-center">
+                        <div class="premium-icon mb-4">
+                            <i class="fas fa-robot fa-3x text-warning"></i>
+                        </div>
+                        <h3 class="h4 mb-3">AI Assistant</h3>
+                        <p class="mb-0">Get smart suggestions and automate your task management with AI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4">Ready to Experience These Features?</h2>
+                <p class="lead mb-4">Join thousands of users who are already enjoying our powerful todo app.</p>
+                {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">
+                    <i class="fas fa-rocket me-2"></i> Get Started Now
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+    // Animate elements when they come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate__fadeInUp');
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    document.querySelectorAll('.feature-card, .premium-card').forEach((el) => {
+        observer.observe(el);
+    });
+</script>
+{% endblock %}
+{% endblock %}

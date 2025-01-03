@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #4F46E5; margin-bottom: 10px;">Task Reminder</h1>
+        <p style="color: #6B7280; font-size: 16px;">You have tasks that need attention!</p>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #1F2937; margin-bottom: 15px;">Task Details</h2>
+        <div style="border-left: 4px solid #4F46E5; padding-left: 15px; margin-bottom: 20px;">
+            <h3 style="color: #1F2937; margin: 0 0 5px 0;">{{ todo.title }}</h3>
+            {% if todo.description %}
+            <p style="color: #4B5563; margin: 0 0 10px 0;">{{ todo.description }}</p>
+            {% endif %}
+            <p style="color: #6B7280; margin: 0;">
+                <strong>Due:</strong> {{ todo.due_date|date:"F j, Y g:i A" }}
+            </p>
+            {% if todo.category %}
+            <p style="color: #6B7280; margin: 5px 0 0 0;">
+                <strong>Category:</strong> {{ todo.category.name }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #1F2937; margin-bottom: 15px;">Quick Actions</h2>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <a href="{{ site_url }}{% url 'todo_detail' todo.id %}" 
+               style="display: inline-block; background: #4F46E5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                View Task
+            </a>
+            <a href="{{ site_url }}{% url 'complete_todo' todo.id %}" 
+               style="display: inline-block; background: #10B981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Mark Complete
+            </a>
+        </div>
+    </div>
+
+    {% if todo.subtasks.exists %}
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #1F2937; margin-bottom: 15px;">Subtasks</h2>
+        <ul style="color: #4B5563; line-height: 1.6; padding-left: 20px;">
+            {% for subtask in todo.subtasks.all %}
+            <li>{{ subtask.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 30px; color: #6B7280; font-size: 14px;">
+        <p>You received this email because you have enabled task reminders.</p>
+        <p>To update your notification preferences, visit your <a href="{{ site_url }}{% url 'settings' %}" style="color: #4F46E5; text-decoration: none;">account settings</a>.</p>
+        <p>© {% now "Y" %} TaskMaster. All rights reserved.</p>
+    </div>
+</div>
+{% endblock %}
